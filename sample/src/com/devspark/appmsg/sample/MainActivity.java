@@ -28,7 +28,7 @@ import com.devspark.appmsg.AppMsg;
 /**
  * Sample of AppMsg library.
  * 
- * @author e.shishkin
+ * @author Evgeny Shishkin
  * 
  */
 public class MainActivity extends SherlockActivity {

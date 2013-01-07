@@ -27,7 +27,7 @@ import android.view.animation.AnimationUtils;
 
 /**
  * 
- * @author e.shishkin
+ * @author Evgeny Shishkin
  * 
  */
 class MsgManager extends Handler {
@@ -118,9 +118,7 @@ class MsgManager extends Handler {
     /**
      * Removes the {@link AppMsg}'s view after it's display duration.
      * 
-     * @param appMsg
-     *            The {@link AppMsg} added to a {@link ViewGroup} and should be
-     *            removed.s
+     * @param appMsg The {@link AppMsg} added to a {@link ViewGroup} and should be removed
      */
     private void removeMsg(final AppMsg appMsg) {
         ViewGroup parent = ((ViewGroup) appMsg.getView().getParent());
