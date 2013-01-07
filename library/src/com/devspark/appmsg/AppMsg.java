@@ -26,45 +26,39 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 /**
- * In-layout notifications. Based on {@link android.widget.Toast} notifications
- * and article by Cyril Mottier (http://android.cyrilmottier.com/?p=773).
+ * In-layout notifications. Based on {@link android.widget.Toast} notifications and article by Cyril Mottier (http://android.cyrilmottier.com/?p=773).
  * 
- * @author e.shishkin
+ * @author Evgeny Shishkin
  * 
  */
 public class AppMsg {
 
     /**
-     * Show the view or text notification for a short period of time. This time
-     * could be user-definable. This is the default.
+     * Show the view or text notification for a short period of time. This time could be user-definable. This is the default.
      * 
      * @see #setDuration
      */
     public static final int LENGTH_SHORT = 3000;
 
     /**
-     * Show the view or text notification for a long period of time. This time
-     * could be user-definable.
+     * Show the view or text notification for a long period of time. This time could be user-definable.
      * 
      * @see #setDuration
      */
     public static final int LENGTH_LONG = 5000;
 
     /**
-     * Show the text notification for a long period of time with a negative
-     * style.
+     * Show the text notification for a long period of time with a negative style.
      */
     public static final Style STYLE_ALERT = new Style(LENGTH_LONG, R.color.alert);
 
     /**
-     * Show the text notification for a short period of time with a positive
-     * style.
+     * Show the text notification for a short period of time with a positive style.
      */
     public static final Style STYLE_CONFIRM = new Style(LENGTH_SHORT, R.color.confirm);
 
     /**
-     * Show the text notification for a short period of time with a neutral
-     * style.
+     * Show the text notification for a short period of time with a neutral style.
      */
     public static final Style STYLE_INFO = new Style(LENGTH_SHORT, R.color.info);
 
@@ -74,12 +68,9 @@ public class AppMsg {
     private LayoutParams mLayoutParams;
 
     /**
-     * Construct an empty AppMsg object. You must call {@link #setView} before
-     * you can call {@link #show}.
+     * Construct an empty AppMsg object. You must call {@link #setView} before you can call {@link #show}.
      * 
-     * @param context
-     *            The context to use. Usually your {@link android.app.Activity}
-     *            object.
+     * @param context The context to use. Usually your {@link android.app.Activity} object.
      */
     public AppMsg(Activity context) {
         mContext = context;
@@ -88,20 +79,16 @@ public class AppMsg {
     /**
      * Make a {@link AppMsg} that just contains a text view.
      * 
-     * @param context
-     *            The context to use. Usually your {@link android.app.Activity}
-     *            object.
-     * @param text
-     *            The text to show. Can be formatted text.
-     * @param duration
-     *            How long to display the message. Either {@link #LENGTH_SHORT}
-     *            or {@link #LENGTH_LONG}
+     * @param context The context to use. Usually your {@link android.app.Activity} object.
+     * @param text The text to show. Can be formatted text.
+     * @param duration How long to display the message. Either {@link #LENGTH_SHORT} or {@link #LENGTH_LONG}
      * 
      */
     public static AppMsg makeText(Activity context, CharSequence text, Style style) {
         AppMsg result = new AppMsg(context);
 
-        LayoutInflater inflate = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        LayoutInflater inflate = (LayoutInflater)
+                context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View v = inflate.inflate(R.layout.app_msg, null);
         v.setBackgroundResource(style.background);
 
@@ -115,23 +102,16 @@ public class AppMsg {
     }
 
     /**
-     * Make a {@link AppMsg} that just contains a text view with the text from a
-     * resource.
+     * Make a {@link AppMsg} that just contains a text view with the text from a resource.
      * 
-     * @param context
-     *            The context to use. Usually your {@link android.app.Activity}
-     *            object.
-     * @param resId
-     *            The resource id of the string resource to use. Can be
-     *            formatted text.
-     * @param duration
-     *            How long to display the message. Either {@link #LENGTH_SHORT}
-     *            or {@link #LENGTH_LONG}
+     * @param context The context to use. Usually your {@link android.app.Activity} object.
+     * @param resId The resource id of the string resource to use. Can be formatted text.
+     * @param duration How long to display the message. Either {@link #LENGTH_SHORT} or {@link #LENGTH_LONG}
      * 
-     * @throws Resources.NotFoundException
-     *             if the resource can't be found.
+     * @throws Resources.NotFoundException if the resource can't be found.
      */
-    public static AppMsg makeText(Activity context, int resId, Style style) throws Resources.NotFoundException {
+    public static AppMsg makeText(Activity context, int resId, Style style)
+            throws Resources.NotFoundException {
         return makeText(context, context.getResources().getText(resId), style);
     }
 
@@ -144,25 +124,22 @@ public class AppMsg {
     }
 
     /**
-     * @return <code>true</code> if the {@link AppMsg} is being displayed, else
-     *         <code>false</code>.
+     * @return <code>true</code> if the {@link AppMsg} is being displayed, else <code>false</code>.
      */
     boolean isShowing() {
-        return (mView != null) && (mView.getParent() != null);
+        return mView != null && mView.getParent() != null;
     }
 
     /**
-     * Close the view if it's showing, or don't show it if it isn't showing yet.
-     * You do not normally have to call this. Normally view will disappear on
-     * its own after the appropriate duration.
+     * Close the view if it's showing, or don't show it if it isn't showing yet. You do not normally have to call this. Normally view will disappear on its own
+     * after the appropriate duration.
      */
     public void cancel() {
         MsgManager.getInstance().clearMsg(this);
     }
 
     /**
-     * Cancels all queued {@link AppMsg}s. If there is a {@link AppMsg}
-     * displayed currently, it will be the last one displayed.
+     * Cancels all queued {@link AppMsg}s. If there is a {@link AppMsg} displayed currently, it will be the last one displayed.
      */
     public static void cancelAll() {
         MsgManager.getInstance().clearAllMsg();
@@ -213,22 +190,18 @@ public class AppMsg {
     }
 
     /**
-     * Update the text in a AppMsg that was previously created using one of the
-     * makeText() methods.
+     * Update the text in a AppMsg that was previously created using one of the makeText() methods.
      * 
-     * @param resId
-     *            The new text for the AppMsg.
+     * @param resId The new text for the AppMsg.
      */
     public void setText(int resId) {
         setText(mContext.getText(resId));
     }
 
     /**
-     * Update the text in a AppMsg that was previously created using one of the
-     * makeText() methods.
+     * Update the text in a AppMsg that was previously created using one of the makeText() methods.
      * 
-     * @param s
-     *            The new text for the AppMsg.
+     * @param s The new text for the AppMsg.
      */
     public void setText(CharSequence s) {
         if (mView == null) {
@@ -242,8 +215,7 @@ public class AppMsg {
     }
 
     /**
-     * Gets the crouton's layout parameters, constructing a default if
-     * necessary.
+     * Gets the crouton's layout parameters, constructing a default if necessary.
      * 
      * @return the layout parameters
      */
@@ -257,8 +229,7 @@ public class AppMsg {
     /**
      * Sets the layout parameters which will be used to display the crouton.
      * 
-     * @param layoutParams
-     *            The layout parameters to use.
+     * @param layoutParams The layout parameters to use.
      * @return <code>this</code>, for chaining.
      */
     public AppMsg setLayoutParams(LayoutParams layoutParams) {
@@ -269,8 +240,7 @@ public class AppMsg {
     /**
      * Constructs and sets the layout parameters to have some gravity.
      * 
-     * @param gravity
-     *            the gravity of the Crouton
+     * @param gravity the gravity of the Crouton
      * @return <code>this</code>, for chaining.
      * @see android.view.Gravity
      */
@@ -292,15 +262,12 @@ public class AppMsg {
         /**
          * Construct an {@link AppMsg.Style} object.
          * 
-         * @param duration
-         *            How long to display the message. Either
-         *            {@link #LENGTH_SHORT} or {@link #LENGTH_LONG}
-         * @param resId
-         *            resource for AppMsg background
+         * @param duration How long to display the message. Either {@link #LENGTH_SHORT} or {@link #LENGTH_LONG}
+         * @param resId resource for AppMsg background
          */
         public Style(int duration, int resId) {
             this.duration = duration;
-            background = resId;
+            this.background = resId;
         }
 
         /**
@@ -323,7 +290,8 @@ public class AppMsg {
                 return false;
             }
             Style style = (Style) o;
-            return (style.duration == duration) && (style.background == background);
+            return style.duration == duration
+                    && style.background == background;
         }
 
     }
