@@ -138,11 +138,11 @@ public class AppMsg {
     private static AppMsg makeText(Activity context, CharSequence text, Style style, View view, boolean floating) {
         AppMsg result = new AppMsg(context);
 
-        view.setBackgroundResource(style.background);
+
 
         TextView tv = (TextView) view.findViewById(android.R.id.message);
         tv.setText(text);
-
+		tv.setBackgroundResource(style.background);
         result.mView = view;
         result.mDuration = style.duration;
         result.mFloating = floating;
